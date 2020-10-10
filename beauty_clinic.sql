@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 08, 2020 at 12:38 PM
+-- Generation Time: Oct 09, 2020 at 04:38 PM
 -- Server version: 10.4.14-MariaDB
 -- PHP Version: 7.4.9
 
@@ -32,17 +32,16 @@ USE `beauty_clinic`;
 DROP TABLE IF EXISTS `dtrans`;
 CREATE TABLE `dtrans` (
   `ID_TRANS` varchar(10) NOT NULL,
-  `ID_PERAWATAN` varchar(10) NOT NULL,
-  `ID_OBAT` varchar(10) DEFAULT NULL,
-  `ID_BEAUTICIAN` varchar(10) DEFAULT NULL
+  `ID_OBAT` varchar(10) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `dtrans`
 --
 
-INSERT INTO `dtrans` (`ID_TRANS`, `ID_PERAWATAN`, `ID_OBAT`, `ID_BEAUTICIAN`) VALUES
-('1', 'TR001', NULL, NULL);
+INSERT INTO `dtrans` (`ID_TRANS`, `ID_OBAT`) VALUES
+('1', NULL),
+('2', NULL);
 
 -- --------------------------------------------------------
 
@@ -54,8 +53,10 @@ DROP TABLE IF EXISTS `htrans`;
 CREATE TABLE `htrans` (
   `ID_TRANS` varchar(10) NOT NULL,
   `TOTAL_TRANS` int(11) NOT NULL,
-  `TANGGAL_TRANS` date NOT NULL,
+  `TANGGAL_TRANS` datetime NOT NULL,
   `ID_PELANGGAN` varchar(10) NOT NULL,
+  `ID_PERAWATAN` varchar(10) DEFAULT NULL,
+  `ID_BEAUTICIAN` varchar(10) DEFAULT NULL,
   `PEMBAYARAN` varchar(255) NOT NULL,
   `STATUS_TRANS` varchar(1) NOT NULL COMMENT '0 = BELUM SELESAI,\r\n1 = SUDAH SELESAI'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -64,8 +65,10 @@ CREATE TABLE `htrans` (
 -- Dumping data for table `htrans`
 --
 
-INSERT INTO `htrans` (`ID_TRANS`, `TOTAL_TRANS`, `TANGGAL_TRANS`, `ID_PELANGGAN`, `PEMBAYARAN`, `STATUS_TRANS`) VALUES
-('1', 350000, '2020-10-08', '1', '', '0');
+INSERT INTO `htrans` (`ID_TRANS`, `TOTAL_TRANS`, `TANGGAL_TRANS`, `ID_PELANGGAN`, `ID_PERAWATAN`, `ID_BEAUTICIAN`, `PEMBAYARAN`, `STATUS_TRANS`) VALUES
+('1', 350000, '2020-10-08 00:00:00', '1', NULL, NULL, '', '0'),
+('2', 250000, '2020-10-15 18:10:00', '2', NULL, NULL, '', '0'),
+('3', 350000, '2020-10-16 02:29:00', '3', NULL, NULL, 'Tunai', '0');
 
 -- --------------------------------------------------------
 
@@ -82,6 +85,13 @@ CREATE TABLE `member` (
   `EMAIL_MEMBER` varchar(255) NOT NULL,
   `STATUS_MEMBER` int(11) NOT NULL COMMENT '0 = tidak atif, 1 = aktif'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `member`
+--
+
+INSERT INTO `member` (`ID_MEMBER`, `NAMA_MEMBER`, `ALAMAT_MEMBER`, `TELEPON_MEMBER`, `EMAIL_MEMBER`, `STATUS_MEMBER`) VALUES
+('1', 'Jennifer ', 'Kapasan Dalam 96', '025896354845', 'jen@gmail.com', 0);
 
 -- --------------------------------------------------------
 
@@ -104,6 +114,7 @@ CREATE TABLE `obat` (
 INSERT INTO `obat` (`ID_OBAT`, `NAMA_OBAT`, `STOK_OBAT`, `STATUS_OBAT`) VALUES
 ('AC001', 'Benzoil peroksida', 25, '1'),
 ('AC002', 'Asam salisilat', 25, '1'),
+('AC0022', 'Acne', 25, '1'),
 ('AC003', 'Sulfur dan resorcinol', 25, '1'),
 ('AC004', 'Tretinoin', 25, '1'),
 ('AC005', 'Antibiotik topikal', 25, '1'),
@@ -142,7 +153,9 @@ CREATE TABLE `pelanggan` (
 --
 
 INSERT INTO `pelanggan` (`ID_PELANGGAN`, `NAMA_PELANGGAN`, `TELEPON_PELANGGAN`, `ID_MEMBER`) VALUES
-('1', 'jennifer', '089523698745', '');
+('1', 'jennifer', '089523698745', ''),
+('2', 'PutriJeanette', '085693457567', ''),
+('3', 'steee', '089523698745', '');
 
 -- --------------------------------------------------------
 
@@ -194,13 +207,13 @@ INSERT INTO `staff` (`ID_STAFF`, `NAMA_STAFF`, `ALAMAT_STAFF`, `TELEPON_STAFF`, 
 ('BA0001', 'GloriaMargaret', 'Jagalan 3 / 12', '081523698745', 'Beautician assistant', 'gloria', '1'),
 ('BA0002', 'Liona', 'Sidodadi 25', '085956321458', 'Beautician assistant', 'liona', '1'),
 ('BA0003', 'DewiFortuna', 'Lebak Timur 25', '081450003012', 'Beautician assistant', 'dewi', '1'),
-('BA0004', 'Angela', 'Babatan Mukti 15', '081546932541', 'Beautician assistant', 'angela', '0'),
-('BA0005', 'VictoriaAlexandra', 'Vila Telaga Warna C2-12', '089523647895', 'Beautician assistant', 'victoria', '0'),
+('BA0004', 'Angela', 'Babatan Mukti 15', '081546932541', 'Beautician assistant', 'angela', '1'),
+('BA0005', 'VictoriaAlexandra', 'Vila Telaga Warna C2-12', '089523647895', 'Beautician assistant', 'victoria', '1'),
 ('BN0001', 'AdellaAnwary', 'Ngangel Jaya 52', '0814563294787', 'Beautician', 'adella', '1'),
 ('BN0002', 'KimberlyWijaya', 'Kertopaten 36', '0814579325657', 'Beautician', 'kimberly', '1'),
 ('BN0003', 'AyleneAtmaja', 'Ngagel Jaya Tengah 15', '089523697485', 'Beautician', 'aylene', '1'),
-('BN0004', 'KeyraHousten', 'Puri Sentra Raya H8-16', '081253698745', 'Beautician', 'keyra', '0'),
-('BN0005', 'DianaPratama', 'Taman Internasional b7-28', '085125369187', 'Beautician', 'diana', '0'),
+('BN0004', 'KeyraHousten', 'Puri Sentra Raya H8-16', '081253698745', 'Beautician', 'keyra', '1'),
+('BN0005', 'DianaPratama', 'Taman Internasional b7-28', '085125369187', 'Beautician', 'diana', '1'),
 ('BO0001', 'CelineWijaya', 'Kapasan Dalam 23', '0815469325778', 'Beauty operator', 'celine', '1'),
 ('BO0002', 'StefanieAngelina', 'Kapasari 5', '089563245678', 'Beauty operator', 'stefanie', '1');
 
