@@ -16,9 +16,9 @@
                     if($row["JABATAN_STAFF"] == "Beauty operator"){
                         header("location: OpratorPage.php");
                     } else if($row["JABATAN_STAFF"] == "Beautician"){
-                        header("location: AssistantPage.php");
-                    } else if($row["JABATAN_STAFF"] == "Beautician assistant"){
                         // header("location: home.php");
+                    } else if($row["JABATAN_STAFF"] == "Beautician assistant"){
+                        header("location: AssistantPage.php");
                     } else if($row["JABATAN_STAFF"] == "Admin"){
                         header("location: AdminPage.php");
                     }

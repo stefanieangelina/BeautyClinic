@@ -5,6 +5,26 @@
     if(isset($_POST['register'])){
         header("location: RegisterObat.php");
     }
+
+    if(isset($_POST['btnDelete'])){
+        $idx = $_POST['idx'];
+        $sql = "UPDATE OBAT SET STATUS_OBAT='0' WHERE ID_OBAT='$idx'";
+        $result = $conn->query($sql);
+
+        if($result){
+            echo "<script>alert('Berhasil menghapus obat!')</script>";
+            header('Location: MasterObat.php');
+        }
+    }
+    if(isset($_POST['btnEdit'])){
+        /*$idx = $_POST['idx'];
+        $sql = "UPDATE member SET STATUS_STAFF='0' WHERE ID_STAFF='$idx'";
+        $result = $conn->query($sql);
+
+        if($result){
+            echo "<script>alert('Berhasil menghapus staff!')</script>";
+        }*/
+    }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -50,7 +70,8 @@
                                     <td><?= $row["ID_OBAT"]; ?></td>
                                     <td><?= $row["NAMA_OBAT"]; ?></td>
                                     <td>
-                                        <form method="post">
+                                        <form method="post"> 
+                                            <input type="hidden" name="idx" value="<?= $row["ID_OBAT"]; ?>">
                                             <button name="btnEdit" type="submit" class="btn btn-success">Edit</button>
                                             <button name="btnDelete" type="submit" class="btn btn-danger">Delete</button>
                                         </form>
