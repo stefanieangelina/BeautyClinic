@@ -2,15 +2,10 @@
     include("conn.php");
     session_start();
 
-    /*if(isset($_POST['btnInput'])){
-        $idx = $_POST['idx'];
-        $sql = "UPDATE member SET STATUS_MEMBER='1' WHERE ID_MEMBER='$idx'";
-        $result = $conn->query($sql);
-
-        if($result){
-            echo "<script>alert('Berhasil mengaktifkan kembali member!')</script>";
-        }
-    }*/
+    if(isset($_POST['btnInput'])){
+        $_SESSION['idInput'] = $_POST['idx'];
+        header('Location: InputObat.php');
+    }
 
     if(isset($_POST['btnSelesai'])){
         $idx = $_POST['idx'];

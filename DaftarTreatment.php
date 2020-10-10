@@ -3,7 +3,8 @@
 
     if(isset($_POST["daftar"])) {
         $isi = true;
-        if(empty($_POST['nama']) || empty($_POST['nomorHp']) || empty($_POST['tanggal']) || empty($_POST['pembayaran'])){
+        if(empty($_POST['nama']) || empty($_POST['nomorHp']) || empty($_POST['tanggal']) 
+            || empty($_POST['pembayaran'] || empty($_POST['perawatan']))){
             $isi = false;
         }
 
@@ -16,6 +17,7 @@
             $nomorHp = $_POST["nomorHp"];
             $idMember = $_POST["idMember"];
             $pembayaran = $_POST['pembayaran'];
+            $idPerawatan = $_POST['perawatan'];
 
             $queryinsert = "INSERT INTO PELANGGAN(ID_PELANGGAN , NAMA_PELANGGAN, TELEPON_PELANGGAN, ID_MEMBER) 
                 VALUES('$idx', '$nama', '$nomorHp', '$idMember')";
@@ -36,8 +38,8 @@
             }
             $tanggal = $_POST["tanggal"];
 
-            $queryinsert = "INSERT INTO HTRANS(ID_TRANS , TOTAL_TRANS, TANGGAL_TRANS, ID_PELANGGAN, PEMBAYARAN, STATUS_TRANS) 
-                VALUES('$idx2', $harga, '$tanggal', '$idx', '$pembayaran', '0')";
+            $queryinsert = "INSERT INTO HTRANS(ID_TRANS , TOTAL_TRANS, TANGGAL_TRANS, ID_PELANGGAN, ID_PERAWATAN, PEMBAYARAN, STATUS_TRANS) 
+                VALUES('$idx2', $harga, '$tanggal', '$idx', '$idPerawatan','$pembayaran', '0')";
             $ins = mysqli_query($conn , $queryinsert);
 
             // input dtrans
